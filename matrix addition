@@ -1,0 +1,44 @@
+n1=int(input("enter the number of rows of 1st matrix"))
+m1=int(input("enter the number of columns of 1st matrix"))
+A=[]
+print("enter the elements")
+for i in range(n1):
+    row1=[]
+    for j in range(m1):
+        row1.append(int(input()))
+    A.append(row1)
+print("matrix 1 is ")
+for i in range(n1):
+    for j in range(m1):
+        print(A[i][j],end=" ")
+    print()
+n2=int(input("enter the number of rows of 2nd matrix"))
+m2=int(input("enter the number of columns of 2nd matrix"))
+B=[]
+print("enter the elements ")
+for i in range(n2):
+    row2=[]
+    for j in range(m2):
+        row2.append(int(input()))
+    B.append(row2)
+print("matrix is ")
+for i in range(n2):
+    for j in range(m2):
+        print(B[i][j],end=" ")
+    print()
+#addition
+C=[]
+for i in range(n1):
+    row=[]
+    for j in range(m2):
+        row.append(0)
+    C.append(row)
+for i in range(n1):
+    for j in range(m2):
+        C[i][j]=A[i][j]+B[i][j]
+
+print("resultant matrix is ")
+for i in range(n1):
+    for j in range(m2):
+        print(C[i][j],end=" ")
+    print()
