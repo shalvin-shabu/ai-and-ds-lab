@@ -1,0 +1,47 @@
+n1=int(input("enter the number of rows of 1st matrix"))
+m1=int(input("enter the number of columns of 1st matrix"))
+A=[]
+for i in range(n1):
+    row1=[]
+    for j in range(m1):
+        row1.append(int(input()))
+    A.append(row1)
+print("matrix 1 is ")
+for i in range(n1):
+    for j in range(m1):
+        print(A[i][j],end=" ")
+    print()
+n2=int(input("enter the number of rows of 2nd matrix"))
+m2=int(input("enter the number of columns of 2nd matrix"))
+B=[]
+for i in range(n2):
+    row2=[]
+    for j in range(m2):
+        row2.append(int(input()))
+    B.append(row2)
+
+for i in range(n2):
+    for j in range(m2):
+        print(B[i][j],end=" ")
+    print()
+#multiplication
+if(n1==m2):
+    C=[]
+    for i in range(n1):
+        row=[]
+        for j in range(m2):
+            row.append(0)
+        C.append(row)
+    for i in range(n1):
+        for j in range(m2):
+            C[i][j]=0
+            for k in range(m2):
+                C[i][j]+=A[i][k]*B[k][j]
+    print("matrix 1 is ")
+    print("resultant matrix is ")
+    for i in range(n1):
+        for j in range(m2):
+            print(C[i][j],end=" ")
+        print()
+else:
+    print ("can't multiply")
