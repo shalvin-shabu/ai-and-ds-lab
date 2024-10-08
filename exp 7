@@ -1,0 +1,72 @@
+import matplotlib.pyplot as plt
+import seaborn as sna
+import numpy as np 
+import pandas as pd
+
+df=pd.read_csv('/home/s5ad2/Downloads/glass.csv') 
+
+df.info()
+
+df.head()
+
+df.isna().sum()
+
+df.shape
+
+df.columns
+
+X=df[['RI', 'Na', 'Mg', 'Al', 'Si', 'K', 'Ca', 'Ba', 'Fe']]
+y=df['Type']
+
+
+from sklearn.model_selection import train_test_split
+X_train,X_test,y_train,y_test=train_test_split(X,y,test_size=.10,random_state=20)
+
+
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.metrics import accuracy_score
+classifier=MultinomialNB()
+classifier.fit(X_train,y_train)
+
+
+y_pred=classifier.predict(X_test)
+
+
+accuracy=accuracy_score(y_test,y_pred)
+
+
+
+print("Accuracy:",accuracy)
+
+
+
+
+#to improve accuracy,CROSS VALIDATION is tried
+from sklearn.model_selection import cross_val_score
+from sklearn.model_selection import KFold
+from sklearn.metrics import make_scorer
+
+
+#define the no of splits for cross validation
+n_splits=5
+
+
+
+#initialize a KFold cross-validation object
+kf=KFold(n_splits=n_splits,shuffle=True,random_state=42)
+
+
+#perform cross validation and complete accuracy scores
+accuracy_scores=cross_val_score(classifier,X,y,cv=kf,scoring=make_scorer(accuracy_score))
+
+
+
+
+#calculate and print the mean accuracy accross all folds
+print("Accuracy Scores for Each Fold:")
+for i, score in enumerate(accuracy_scores):
+    print(f"Fold{i+1}:{score:.3f}")
+
+
+mean_accuracy=np.mean(accuracy_scores)
+print(f"mean accuracy:{mean_accuracy:.2f}")
