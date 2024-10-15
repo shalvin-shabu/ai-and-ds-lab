@@ -1,0 +1,73 @@
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import LabelEncoder,StandardScaler
+from sklearn.decomposition import PCA
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+
+
+
+#load the dataset
+data=pd.read_csv('/home/s5ad2/Downloads/car_evaluation.csv')
+data.head(10)
+
+
+#encode categorical features to numerical values
+for col in data.columns[:-1]:#assuming last column to the target
+    le=LabelEncoder()
+    data[col]=le.fit_transform(data[col])
+
+
+#define data into features and target
+x=data[['buy_price', 'maint_cost', 'doors', 'person', 'boot_space', 'safety']]
+y=data['class']
+print(x)
+print(y)
+
+#split the training data into training set and testing set
+x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.3,random_state=42)
+
+
+#standardize  the features (importand for pca)
+scaler=StandardScaler()
+x_train_std=scaler.fit_transform(x_train)
+x_test_std=scaler.transform(x_test)
+
+
+#perform pca with differnt numbers of components
+best_accuracy=0
+best_n_components=0
+for n_components in range(2,6):
+    pca=PCA(n_components=n_components)
+    x_train_pca=pca.fit_transform(x_train_std)
+    x_test_pca=pca.transform(x_test_std)
+    clf=RandomForestClassifier(random_state=42)
+    clf.fit(x_train_pca,y_train)
+    #make predictions and accuracy
+    y_pred=clf.predict(x_test_pca)
+    accuracy=accuracy_score(y_test,y_pred)
+    print(f"no of PCA components:{n_components},acc:{accuracy}")
+    #update best accuracy and no of components
+if accuracy>best_accuracy:
+    best_accuracy=accuracy
+    best_n_components=n_components
+    print(f"Best number of PCA components:{best_n_components},Best accuracy:{best_accuracy}")
+
+
+import matplotlib.pyplot as plt 
+pca.fit(x_train_std)
+explained_variance_ratio=pca.explained_variance_ratio_
+print(explained_variance_ratio)
+plt.figure(figsize=(8,5))
+plt.bar(range(1,len(explained_variance_ratio)+1),explained_variance_ratio,color='red')
+plt.title("screen plot")
+plt.xlabel("principle component")
+plt.ylabel("explained variance ratio")
+plt.xticks(range(1,len(explained_variance_ratio)+1))
+plt.show()
+
+
+covariance_matrix=np.cov(x_train_std.T)
+print("covariance matrix:")
+print(covariance_matrix)
