@@ -27,3 +27,14 @@ report=classification_report(y_test,y_pred)
 print(f"accuracy:{accuracy:2f}")
 print("\nconfusion matrix:\n",conf_matrix)
 print("\nclassification report:\n",report)
+
+
+correct_predictions=0
+wrong_predictions=0
+for i in range(len(y_test)):
+    if y_test.values[i]==y_pred[i]:
+        correct_predictions +=1
+    else:
+        wrong_predictions +=1
+print(f"correct predictions:",correct_predictions)
+print(f"wrong predictions:",wrong_predictions)
