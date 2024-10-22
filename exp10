@@ -32,6 +32,10 @@ for i in range(1,11):
     km.fit(data_for_clustering)
     wss=sum((np.min(km.transform(data_for_clustering),axis=1))**2)
     wss_list.append(wss)
+plt.xlabel("k value")
+plt.ylabel("WSS")
+plt.plot(range(1,11),wss_list)
+
 wss_list
 
 plt.xlabel("k value")
