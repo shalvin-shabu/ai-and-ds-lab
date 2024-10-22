@@ -1,0 +1,43 @@
+import pandas as pd
+from sklearn.cluster import KMeans
+import matplotlib.pyplot as plt
+
+data=pd.read_csv('/home/s5ad2/Downloads/Iris.csv')
+data.head(10)
+
+data['Species'].value_counts()
+
+data_for_clustering=data[['SepalLengthCm','SepalWidthCm','PetalLengthCm','PetalWidthCm']]
+
+k=3
+kmeans=KMeans(n_clusters=k,random_state=0)
+kmeans.fit(data_for_clustering)
+
+data['Cluster']=kmeans.labels_
+
+plt.scatter(data['SepalLengthCm'],data['SepalWidthCm'],c=data['Cluster'])
+plt.xlabel('sepal length (cm)')
+plt.ylabel('sepal width (cm)')
+plt.show()
+
+plt.scatter(data['PetalLengthCm'],data['PetalWidthCm'],c=data['Cluster'])
+plt.xlabel('petal length (cm)')
+plt.ylabel('petal width (cm)')
+plt.show()
+
+import numpy as np
+wss_list=[]#within-cluster sum of squares(wss)
+for i in range(1,11):
+    km=KMeans(n_clusters=i)
+    km.fit(data_for_clustering)
+    wss=sum((np.min(km.transform(data_for_clustering),axis=1))**2)
+    wss_list.append(wss)
+wss_list
+
+plt.xlabel("k value")
+plt.ylabel("WSS")
+plt.plot(range(1,11),wss_list)
+
+wss_list
+
+
