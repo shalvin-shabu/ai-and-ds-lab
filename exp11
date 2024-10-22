@@ -24,7 +24,7 @@ accuracy=accuracy_score(y_test,y_pred)
 conf_matrix=confusion_matrix(y_test,y_pred)
 report=classification_report(y_test,y_pred)
 
-print(f"accuracy:{accuracy:2f}")
+print(f"accuracy:{accuracy:.2f}")
 print("\nconfusion matrix:\n",conf_matrix)
 print("\nclassification report:\n",report)
 
