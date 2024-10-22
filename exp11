@@ -1,0 +1,29 @@
+import numpy as np
+import pandas as pd
+data=pd.read_csv('/home/s5ad2/Downloads/heart_cleveland_upload (1).csv')
+data.info()
+data.head()
+data.columns
+
+x=data[['age', 'sex', 'cp', 'trestbps', 'chol', 'fbs', 'restecg', 'thalach',
+       'exang', 'oldpeak', 'slope', 'ca', 'thal']]
+y=data['condition']
+
+from sklearn.model_selection import train_test_split
+x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=.20,random_state=20)
+
+from sklearn.svm import SVC
+svm=SVC(kernel='linear',random_state=42)
+
+svm.fit(x_train,y_train)
+
+y_pred=svm.predict(x_test)
+
+from sklearn.metrics import accuracy_score,classification_report,confusion_matrix
+accuracy=accuracy_score(y_test,y_pred)
+conf_matrix=confusion_matrix(y_test,y_pred)
+report=classification_report(y_test,y_pred)
+
+print(f"accuracy:{accuracy:2f}")
+print("\nconfusion matrix:\n",conf_matrix)
+print("\nclassification report:\n",report)
