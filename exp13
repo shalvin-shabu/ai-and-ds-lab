@@ -1,0 +1,48 @@
+import pandas as pd
+import csv
+
+stud_list=[
+    ['Name','Branch','Year','CGPA'],
+    ['Natalie','AD',2020,9.7],
+    ['Rhyn','CSE',2021,7.8],
+    ['Zendaya','AD',2020,10],
+    ['Nate','EEE',2019,10],
+    ['Zoyer','EEE',2019,8.5],
+    ['Kate','EC',2020,9.6],
+    ['Nadal','MR',2022,8.6]
+]
+
+stud_list
+
+with open('Stud_Details.csv','w',newline='') as stud_file:
+    writer=csv.writer(stud_file)
+    writer.writerows(stud_list)
+
+    data=pd.read_csv('Stud_Details.csv')
+data
+
+
+num_rows = data.shape[0]
+print(f"Rows: ",num_rows)
+num_column = data.shape[1]
+print(f"Columns:",num_column)
+
+data.columns
+year=data['Year']
+year
+
+data.sort_values(['CGPA'],ascending=False)
+
+import matplotlib.pyplot as plt
+
+plt.hist(data['CGPA'],bins=5,edgecolor='black')
+plt.title('Chart Distribution')
+plt.xlabel('CGPA')
+plt.ylabel('Frequency')
+plt.show()
+
+plt.bar(data['Name'],data['CGPA'],color = 'Orange',edgecolor='black')
+plt.title('Marks Representation')
+plt.xlabel('Name')
+plt.ylabel('CGPA')
+plt.show()
