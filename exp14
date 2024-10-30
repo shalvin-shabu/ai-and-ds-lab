@@ -1,0 +1,33 @@
+import numpy as np
+from sklearn.tree import  DecisionTreeClassifier
+import pandas as pd
+import matplotlib.pyplot as plt
+data=pd.read_csv('/home/s5ad2/Downloads/Iris.csv')
+data.info()
+data.head(5)
+
+data.isna().sum()
+
+data.shape
+data.columns
+
+
+x=data[[ 'SepalLengthCm', 'SepalWidthCm', 'PetalLengthCm', 'PetalWidthCm']]
+y=data['Species']
+
+from sklearn.model_selection import train_test_split
+x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=.10,random_state=20)
+
+df=DecisionTreeClassifier()
+df.fit(x_train,y_train)
+
+from sklearn.tree import plot_tree
+
+x.columns
+
+y["Species"].unique()
+
+plt.figure(figsize=(12,8))
+plot_tree(df,filled=True,feature_names=( "SepalLengthCm", "SepalWidthCm", "PetalLengthCm", "PetalWidthCm"),class_names=("Iris-setosa","Iris-versicolor","Iris-virginica"))
+plt.show()
+
