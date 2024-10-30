@@ -1,0 +1,22 @@
+import numpy as np
+import pandas as pd
+df=pd.read_csv('/home/s5ad2/Downloads/heart_cleveland_upload (1).csv')
+
+df.info()
+
+correlation_matrix = df.corr()
+covariance_matrix = df.cov()
+
+target_correlation = correlation_matrix['condition'].abs().sort_values(ascending=False)
+top_5_attributes = target_correlation[1:6]
+print("Correlation Matrix : \n")
+print(correlation_matrix)
+print("\nTop 5 attributes closely related to the predicted attribute:")
+print(top_5_attributes)
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+sns.barplot(x=top_5_attributes.index,y=top_5_attributes.values,palette='Blues')
+plt.xlabel('Attributes',fontsize=12)
+plt.ylabel('Absolute Correlation',fontsize=12)
+plt.show()
